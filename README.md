@@ -3,11 +3,11 @@
 
 ## Serving the app locally
 
-Fork and/or clone the repo
+Fork and/or clone the repo.
 
 Run `npm i && npm start`
 
-If the app does not automatically open in your browser, you can find the port in the terminal:
+If the app does not automatically open in your browser, you can find the port in your terminal:
 
 ```
 Compiled successfully!
@@ -35,3 +35,4 @@ Space or hyphen separated
 http://localhost:3000/all buildings (http://localhost:3000/all%20buildings)
 http://localhost:3000/all-buildings
 ```
+The app will alert you if it does not recognise your query and display unordered data.
