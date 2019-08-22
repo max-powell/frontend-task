@@ -1,6 +1,7 @@
 # Arkera Frontend Task
 ### Max Powell
 
+
 ## Serving the app locally
 
 Fork and/or clone the repo.
@@ -20,9 +21,9 @@ You can now view frontend-task in the browser.
 
 ## Using the app
 
-By default, cities are displayed in the order they appear in the CSV data.
+At the root url, cities are displayed in the order they appear in the CSV data.
 
-To sort the data, add the desired column header to the URL.
+To sort the data, add the full header of the desired column to the URL.
 
 The app accepts inputs in the following formats:
 
@@ -35,4 +36,4 @@ Space or hyphen separated
 http://localhost:3000/all buildings (http://localhost:3000/all%20buildings)
 http://localhost:3000/all-buildings
 ```
-The app will alert you if it does not recognise your query and display unordered data.
+If the app does not recognise your query, it will alert you and display unordered data.
