@@ -10,16 +10,17 @@ import citiesCSV from './cities'
 class App extends Component {
 
   state = {
+    headers: [],
     cities: [],
     loading: true
   }
 
   componentDidMount () {
     Papa.parse(citiesCSV, {
-      header: true,
       dynamicTyping: true,
-      complete: ({data: cities}) => {
+      complete: ({data: [headers, ...cities]}) => {
         this.setState({
+          headers,
           cities,
           loading: false
         })
@@ -28,17 +29,24 @@ class App extends Component {
   }
 
   sortCities = query => {
+    const propertyIndex = this.state.headers.findIndex((e) => e === query)
+
+    const comparatorAsc = (a, b) => {
+      return a[propertyIndex] < b[propertyIndex] ? -1 : 1
+    }
+
+    const comparatorDesc = (a, b) => {
+      return -comparatorAsc(a, b)
+    }
+
+
     switch (query) {
       case 'City':
       case 'Country':
       case '#':
-        return [...this.state.cities].sort((a, b) => {
-          return a[query] < b[query] ? -1 : 1
-        })
+        return [...this.state.cities].sort(comparatorAsc)
       default:
-        return [...this.state.cities].sort((a, b) => {
-          return a[query] < b[query] ? 1 : -1
-        })
+        return [...this.state.cities].sort(comparatorDesc)
     }
   }
 
@@ -53,13 +61,14 @@ class App extends Component {
   }
 
   render() {
-    const { cities, loading } = this.state
+    const { headers, cities, loading } = this.state
     const { sortCities, parseQuery } = this
 
     let displayedCities = [...cities]
-    if (cities[0]) {
+    if (!loading) {
       const query = parseQuery()
-      if (cities[0].hasOwnProperty(query)) {
+      console.log(headers, query)
+      if (headers.includes(query)) {
         displayedCities = sortCities(query)
       } else {
         query !== '' && alert('Invalid query: ' + query)
@@ -69,7 +78,7 @@ class App extends Component {
     return (
         loading
         ? <div>Loading...</div>
-        : <CityTable cities={displayedCities} />
+        : <CityTable headers={headers} cities={displayedCities} />
     )
   }
 
